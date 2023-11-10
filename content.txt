@@ -1,0 +1,12 @@
+when component's state changes then the component
+will re-render
+
+When ever the component re-renders it has it own
+side effects
+
+Component Life Cycle
+Each Component has multiple life Cycle event
+-> Create
+-> Update
+-> Destroy
+
