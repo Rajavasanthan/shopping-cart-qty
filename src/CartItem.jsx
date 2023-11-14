@@ -1,44 +1,37 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-function CartItem({ item, handleRemoveItem,setTotal,total}) {
+function CartItem({ item, handleRemoveItem, handleIncreaseQuantity, handleDecreaseQuantity }) {
   const [qty, setQty] = useState(1);
-  const [price, setPrice] = useState(item.price);
 
-
-  let incQty = () => {
+  const increaseQuantity = () => {
     setQty(qty + 1);
-    setPrice(parseInt(price) + parseInt(item.price));
-    setTotal(parseInt(total) + parseInt(item.price))
+    handleIncreaseQuantity(item.price);
   };
 
-  let decQty = () => {
-    setQty(qty - 1);
-    setPrice(parseInt(price) - parseInt(item.price));
-    setTotal(parseInt(total) - parseInt(item.price))
+  const decreaseQuantity = () => {
+    if (qty > 1) {
+      setQty(qty - 1);
+      handleDecreaseQuantity(item.price);
+    }
   };
+
   return (
     <li className="list-group-item d-flex justify-content-between align-items-start">
       <div className="ms-2 me-auto">
         <div className="fw-bold">{item.name}</div>
-        Rs.{price}
+        Rs.{item.price}
       </div>
-      <button className="btn" onClick={incQty}>
+      <button className="btn" onClick={increaseQuantity}>
         +
       </button>
       {qty}
-      <button
-        disabled={qty === 1 ? true : false}
-        className="btn"
-        onClick={decQty}
-      >
+      <button disabled={qty === 1} className="btn" onClick={decreaseQuantity}>
         -
       </button>
-      <button
-        onClick={() => handleRemoveItem(item,qty)}
-        className="btn btn-sm btn-danger"
-      >
+      <button onClick={() => handleRemoveItem(item)} className="btn btn-sm btn-danger">
         X
       </button>
+      <div>Total: Rs. {qty * item.price}</div>
     </li>
   );
 }
